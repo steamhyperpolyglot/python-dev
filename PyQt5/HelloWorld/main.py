@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QToolBar, QAction
 from PyQt5.QtCore import Qt
 
+
 class MainWindow(QMainWindow):
 	
 	def contextMenuEvent(self, event):
