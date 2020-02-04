@@ -1,13 +1,39 @@
 import sys
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QToolBar, QAction
+from PyQt5.QtCore import Qt
 
-# You need one (and only one) QApplication instance per application.
-# Pass in sys.argv to allow command line arguments for your app.
-# If you know you won't use command line arguments QApplication([]) is fine.
+class MainWindow(QMainWindow):
+	
+	def contextMenuEvent(self, event):
+		print("Context menu event!")
+		super(MainWindow, self).contextMenuEvent(event)
+	
+	def __init__(self, *args, **kwargs):
+		super(MainWindow, self).__init__(*args, **kwargs)
+		
+		self.setWindowTitle("My Awesome App")
+		
+		label = QLabel("This is a PyQt5 window!")
+		
+		label.setAlignment(Qt.AlignCenter)
+		
+		self.setCentralWidget(label)
+		
+		toolbar = QToolBar("My Main Toolbar")
+		self.addToolBar(toolbar)
+		
+		button_action = QAction("Your button", self)
+		button_action.setStatusTip("This is your button")
+		button_action.triggered.connect(self.onMyToolBarButtonClick)
+		toolbar.addAction(button_action)
+	
+	def onMyToolBarButtonClick( self, s ):
+		print("click", s)
+
+
 app = QApplication(sys.argv)
 
-# Start the event loop.
-app.exec_()
+window = MainWindow()
+window.show()
 
-# Your application won't reach here until you exit and the event loop has
-# stopped.
+app.exec_()
