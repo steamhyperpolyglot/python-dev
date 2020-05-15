@@ -1,0 +1,4 @@
+Fields of application range from validation 
+to parsing/replacing strings, passing through 
+translating data to other formats and web 
+scraping.
