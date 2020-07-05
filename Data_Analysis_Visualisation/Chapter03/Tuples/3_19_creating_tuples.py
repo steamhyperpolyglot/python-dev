@@ -1,0 +1,5 @@
+Names = ('Omar', 'Ali', 'Bahaa')
+Marks = (75, 65, 95)
+print(Names[2])
+print(Marks)
+print(max(Marks))
