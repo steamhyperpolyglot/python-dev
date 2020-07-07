@@ -167,8 +167,8 @@ class FoodOrderGUI(QWidget):
 		pizza_image = self.loadImage(pizza_image_path)
 		pizza_desc = QLabel()
 		pizza_desc.setObjectName("ImageInfo")
-		pizza_desc.setText("Build a custom pizza for you. Start with your ",
-		                   "favourite crust and add any toppings, ",
+		pizza_desc.setText("Build a custom pizza for you. Start with your " +
+		                   "favourite crust and add any toppings, " +
 		                   "plus the perfect amount of cheese and sauce.")
 		pizza_desc.setWordWrap(True)
 		
@@ -236,16 +236,106 @@ class FoodOrderGUI(QWidget):
 		
 	
 	def wingsTab(self):
-		pass
+		# Set up widgets and layouts to display information
+		# to the user about the page
+		tab_wings_label = QLabel("TRY OUR AMAZING WINGS")
+		tab_wings_label.setObjectName("Header")
+		description_box = QWidget()
+		description_box.setObjectName("ImageBorder")
+		wings_image_path = "images/wings.png"
+		wings_image = self.loadImage(wings_image_path)
+		wings_desc = QLabel()
+		wings_desc.setObjectName("ImageInfo")
+		wings_desc.setText("6 pieces of rich-tasting, white meat chicken that will have you coming back for more.")
+		wings_desc.setWordWrap(True)
+
+		h_box = QHBoxLayout()
+		h_box.addWidget(wings_image)
+		h_box.addWidget(wings_desc)
+
+		description_box.setLayout(h_box)
+
+		wings_gbox = QGroupBox()
+		wings_gbox.setTitle("CHOOSE YOUR FLAVOR")
+
+		self.wings_group = QButtonGroup()
+		gb_v_box = QVBoxLayout()
+		wings_list = ["Buffalo", "Sweet-Sour", "Teriyaki", "Barbecue"]
+
+		# Create radio buttons for the different flavors and add to layout
+		for fl in wings_list:
+			flavor_rb = QRadioButton(fl)
+			gb_v_box.addWidget(flavor_rb)
+			self.wings_group.addButton(flavor_rb)
+		
+		wings_gbox.setLayout(gb_v_box)
+
+		# Create button to add information to side widget when clicked
+		add_to_order_button2 = QPushButton("Add To Order")
+		add_to_order_button2.clicked.connect(self.displayWingsInOrder)
+
+		# Create layout for wings tab (page 2)
+		page2_v_box = QVBoxLayout()
+		page2_v_box.addWidget(tab_wings_label)
+		page2_v_box.addWidget(description_box)
+		page2_v_box.addWidget(wings_gbox)
+		page2_v_box.addWidget(add_to_order_button2, alignment=Qt.AlignRight)
+		page2_v_box.addStretch()
+		self.wings_tab.setLayout(page2_v_box)
 	
 	def loadImage(self, img_path):
-		pass
+		"""
+		Load and scale images.
+		"""
+		try:
+			with open(img_path):
+				image = QLabel(self)
+				image.setObjectName("ImageInfo")
+				pixmap = QPixmap(img_path)
+				image.setPixmap(pixmap.scaled(image.size(), 
+					Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation))
+				return image
+		except FileNotFoundError:
+			print("Image not found.")
 	
 	def collectToppingsInList(self):
-		pass
+		"""
+		Create list of all checked toppings radio buttons.
+		"""
+		toppings_list = [button.text() for i, 
+			button in enumerate(self.toppings_group.buttons()) if button.isChecked()]
+		return toppings_list
 	
 	def displayPizzaInOrder(self):
-		pass
+		"""
+		Collect the text from the radio buttons that are checked on pizza page. Display 
+		text in side widget.
+		checkedButton() returns the buttons that are checked in the QButtonGroup.
+		"""
+		try:
+			pizza_text = self.crust_group.checkedButton().text()
+			self.display_pizza_label.setText(pizza_text)
+
+			toppings = self.collectToppingsInList()
+			toppings_str = '\n'.join(toppings)
+			self.display_toppings_label.setText(toppings_str)
+			self.repaint()
+		except AttributeError:
+			print("No value selected.")
+			pass
+
+	def displayWingsInOrder(self):
+		"""
+		Collect the text from the radio buttons that are checked on wings page. Display text 
+		in side widget.
+		"""
+		try:
+			text = self.wings_group.checkedButton().text() + " Wings"
+			self.display_wings_label.setText(text)
+			self.repaint()
+		except AttributeError:
+			print("No value selected.")
+			pass
 	
 
 if __name__ == '__main__':
