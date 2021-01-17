@@ -1,0 +1,3 @@
+{
+    "python.autoComplete.extraPaths": ["./basic_features/layouts", "./basic_features/ui_dialogs"]
+}
