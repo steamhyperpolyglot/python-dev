@@ -1,0 +1,69 @@
+QWidget {
+    background: #333;
+    color: white;
+}
+
+QScrollBar::handle::vertical {
+    background: #141414;
+    border-radius: 7px;
+    border: 0px solid red;
+}
+
+QScrollBar::add-line:vertical {
+    border: none;
+    background: none;
+    color: none;
+}
+
+QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
+    color: none;
+}
+
+QScrollBar::down-arrow {
+    height: 0px;
+}
+
+QPlainTextEdit {
+    font-family: Consolas;
+    font-size: 18px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #cdcdcd;
+    padding: 10px;
+}
+
+QMainWindow QComboBox {
+    background: orange;
+    color: black;
+}
+
+QComboBox::drop-down {
+    color: white;
+}
+
+QComboBox::item {
+    color: white;
+}
+
+QComboBox::item::selected {
+    color: black;
+}
+
+QSpinBox, QLineEdit, QPushButton {
+    color: white;
+    selection-color: blue;
+    selection-background-color: yellow;
+    font-weight: bold;
+    text-align: center;
+}
+
+QLineEdit {
+    min-height: 20;
+}
+
+QPushButton[text="Push me!"] {
+    min-height: 24px;
+    background: green;
+}
